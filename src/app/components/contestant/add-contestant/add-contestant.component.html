@@ -1,0 +1,126 @@
+<form [formGroup]="contestantForm" style="width: 60%">
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">First Name</label>
+    <div class="col-sm-10">
+      <input
+        type="text"
+        class="form-control"
+        id="inputEmail3"
+        placeholder=""
+        formControlName="firstName"
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label"
+      >Last Name</label
+    >
+    <div class="col-sm-10">
+      <input
+        type="text"
+        class="form-control"
+        id="inputPassword3"
+        placeholder=""
+        formControlName="lastName"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label"
+      >Date of Birth</label
+    >
+    <div class="col-sm-10">
+      <input
+        type="date"
+        class="form-control"
+        id="inputPassword3"
+        placeholder=""
+        formControlName="dateOfBirth"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2">Is Active</div>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="gridCheck1"
+          formControlName="isActive"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2">District</div>
+    <div class="col-sm-10">
+      <select class="form-control" formControlName="districtId">
+        <option disabled value="">Select</option>
+        <option *ngFor="let district of districtList" [value]="district.id">{{
+          district.name
+        }}</option>
+      </select>
+    </div>
+  </div>
+
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            id="gridRadios1"
+            value="Male"
+            formControlName="gender"
+          />
+          <label class="form-check-label" for="gridRadios1">
+            Male
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            id="gridRadios2"
+            value="Female"
+            formControlName="gender"
+          />
+          <label class="form-check-label" for="gridRadios2">
+            Female
+          </label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-group row">
+    <div class="col-sm-2">Photo</div>
+    <div class="col-sm-10">
+      <input type="file" (change)="fileProgress($event)" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2">Address</div>
+    <div class="col-sm-10">
+      <textarea class="form-control" formControlName="address"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary mr" (click)="onSave()">
+        Save
+      </button>
+      <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,49 @@
+<button style="margin-bottom: 20px" [routerLink]="['add']">
+  Add Contestant
+</button>
+
+<div class="mat-elevation-z8">
+  <table style="width:100%" mat-table [dataSource]="dataSource">
+    <!-- Name Column -->
+    <ng-container matColumnDef="fullname">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.firstname }} {{ element.lastname }}
+      </td>
+    </ng-container>
+
+    <!-- Date of Birth Column -->
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.dateOfBirth | date }}
+      </td>
+    </ng-container>
+
+    <!-- District Column -->
+    <ng-container matColumnDef="district">
+      <th mat-header-cell *matHeaderCellDef>District</th>
+      <td mat-cell *matCellDef="let element">{{ element?.district?.name }}</td>
+    </ng-container>
+
+    <!-- Gender Column -->
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <button class="mr" (click)="onEdit(element)">Edit</button>
+        <button (click)="onDelete(element)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSize]="10" showFirstLastButtons></mat-paginator>
+</div>
