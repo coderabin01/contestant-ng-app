@@ -33,7 +33,13 @@ export class ContestantComponent implements OnInit {
     });
   }
 
+  onAdd() {
+    this.contestantService.selectedContestant = null;
+    this.router.navigate(['/contestant/add']);
+  }
+
   onEdit(contestant) {
+    this.contestantService.selectedContestant = contestant;
     this.router.navigate(['/contestant/edit/', contestant.id]);
   }
 

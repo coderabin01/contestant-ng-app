@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AddContestantComponent implements OnInit {
   contestantForm: FormGroup;
+  selectedContestant: any;
   constructor(
     private formBuilder: FormBuilder,
     private contestantService: ContestantService,
@@ -18,20 +19,21 @@ export class AddContestantComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.selectedContestant = this.contestantService.selectedContestant;
     this.buildContestantForm();
     this.getDistrictDropdownList();
   }
 
   buildContestantForm() {
     this.contestantForm = this.formBuilder.group({
-      firstName: "",
-      lastName: "",
-      dateOfBirth: "",
-      isActive: "",
-      districtId: "",
-      gender: "",
-      photo: "",
-      address: ""
+      firstName: this.selectedContestant ? this.selectedContestant.firstname : "",
+      lastName: this.selectedContestant ? this.selectedContestant.lastname : "",
+      dateOfBirth: this.selectedContestant ? (this.selectedContestant.dateOfBirth ? this.selectedContestant.dateOfBirth : "") : "",
+      isActive: this.selectedContestant ? (this.selectedContestant.isActive ? this.selectedContestant.isActive : "") : "",
+      districtId: this.selectedContestant ? (this.selectedContestant.districtId ? this.selectedContestant.districtId : "") : "",
+      gender: this.selectedContestant ? this.selectedContestant.gender : "",
+      photo: this.selectedContestant ? this.selectedContestant.photoUrl : "",
+      address: this.selectedContestant ? this.selectedContestant.address : "",
     });
   }
 
@@ -48,6 +50,8 @@ export class AddContestantComponent implements OnInit {
   };
 
   onSave() {
+    if (this.contestantForm.pristine || this.contestantForm.invalid) return;
+
     const formData = new FormData();
     const formValue = this.contestantForm.value;
     formData.append("firstName", formValue.firstName);
@@ -58,7 +62,12 @@ export class AddContestantComponent implements OnInit {
     formData.append("gender", formValue.gender);
     formData.append("photo", formValue.photo);
     formData.append("address", formValue.address);
-    this.addContestant(formData);
+
+    if (this.selectedContestant) {
+      this.updateContestant(formData);
+    } else {
+      this.addContestant(formData);
+    }
   }
 
   onCancel() {
@@ -67,6 +76,15 @@ export class AddContestantComponent implements OnInit {
 
   addContestant(formData) {
     this.contestantService.addContestant(formData).subscribe((response: any) => {
+      alert(response.message);
+      this.router.navigate(['/contestant']);
+    }, (error: HttpErrorResponse) => {
+      alert(error.error.title);
+    });
+  }
+
+  updateContestant(formData) {
+    this.contestantService.updateContestant(this.selectedContestant.id, formData).subscribe((response: any) => {
       alert(response.message);
       this.router.navigate(['/contestant']);
     }, (error: HttpErrorResponse) => {

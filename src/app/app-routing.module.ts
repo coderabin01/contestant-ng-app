@@ -1,3 +1,4 @@
+import { MapComponent } from './components/map/map.component';
 import { AddContestantComponent } from './components/contestant/add-contestant/add-contestant.component';
 import { ContestantRatingComponent } from './components/contestant-rating/contestant-rating.component';
 import { ContestantComponent } from './components/contestant/contestant.component';
@@ -21,8 +22,10 @@ const routes: Routes = [
   }
   , {
     path: "contestant-rating", component: ContestantRatingComponent
-  }  , {
+  }, {
     path: "photo-gallery", component: PhotoGalleryComponent
+  }, {
+    path: "map", component: MapComponent
   }
 ];
 

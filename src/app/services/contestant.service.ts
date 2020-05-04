@@ -7,6 +7,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class ContestantService {
   baseIP = environment.baseIp;
+
+  selectedContestant: any;
   constructor(
     private httpClient: HttpClient
   ) { }
@@ -16,8 +18,17 @@ export class ContestantService {
     return this.httpClient.get(`${this.baseIP}contestant`);
   }
 
+  getContestantListByDistrictName(address) {
+    const httpParams = new HttpParams().set("address", address);
+    return this.httpClient.get(`${this.baseIP}contestant/district`, { params: httpParams });
+  }
+
   addContestant(body) {
     return this.httpClient.post(`${this.baseIP}contestant`, body);
+  }
+
+  updateContestant(contestandId, body) {
+    return this.httpClient.put(`${this.baseIP}contestant/${contestandId}`, body);
   }
 
   deleteContestant(contestantId) {
@@ -25,10 +36,12 @@ export class ContestantService {
   }
   /* End of Contestant Component */
 
+  /* District */
   getDistrictList() {
     return this.httpClient.get(`${this.baseIP}district`);
   }
 
+  /* Contestant Rating */
   getContestantListWithRating(searchDate) {
     const httpParams = new HttpParams().set('from_date', searchDate.fromDate).set('to_date', searchDate.toDate);
     return this.httpClient.get(`${this.baseIP}contestant-rating`, { params: httpParams });
@@ -36,5 +49,10 @@ export class ContestantService {
 
   addContestantRating(body) {
     return this.httpClient.post(`${this.baseIP}contestant-rating`, body);
+  }
+
+  /* Photo Gallery */
+  getContestantPhotoList() {
+    return this.httpClient.get(`${this.baseIP}contestant/photos`);
   }
 }

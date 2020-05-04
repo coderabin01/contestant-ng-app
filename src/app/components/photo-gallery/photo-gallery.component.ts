@@ -1,3 +1,5 @@
+import { environment } from './../../../environments/environment';
+import { ContestantService } from './../../services/contestant.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./photo-gallery.component.scss']
 })
 export class PhotoGalleryComponent implements OnInit {
+  imageUrl = environment.imageUrl;
 
-  constructor() { }
+  photoList: any;
+
+  constructor(
+    private contestantService: ContestantService
+  ) { }
 
   ngOnInit() {
+    this.getContestantPhotoList();
+  }
+
+  getContestantPhotoList() {
+    this.contestantService.getContestantPhotoList().subscribe((response) => {
+      this.photoList = response;
+    });
   }
 
 }

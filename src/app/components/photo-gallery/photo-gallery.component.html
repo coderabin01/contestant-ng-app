@@ -1,1 +1,12 @@
-<p>photo-gallery works!</p>
+<ngb-carousel [interval]="500">
+  <ng-container *ngFor="let photo of photoList">
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img
+          src="{{ imageUrl }}{{ photo.photoUrl }}"
+          alt="Random first slide"
+        />
+      </div>
+    </ng-template>
+  </ng-container>
+</ngb-carousel>
